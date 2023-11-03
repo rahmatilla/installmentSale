@@ -12,7 +12,7 @@ router = APIRouter(
 async def create_customer_api(customer: Customer):
     return await create_customer(customer)
 
-@router.get("/customers/", response_model=List[Customer])
+@router.get("/customers/")#, response_model=List[Customer])
 async def get_customers_api(skip: int = 0, limit: int = 10):
     return await get_customers(skip, limit)
 

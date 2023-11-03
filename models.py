@@ -15,12 +15,18 @@ class Customer(Base):
     phone_number = Column(String)
     email = Column(String)
 
+    # Establish a one-to-many relationship from Customer to Sale
+    sales = relationship("Sale", back_populates="customer")
+
 class Product(Base):
     __tablename__ = "products"
 
     id = Column(Integer, primary_key=True, index=True)
     product_name = Column(String)
     price = Column(Float)
+
+ # Establish a one-to-many relationship from Product to Sale
+    sales = relationship("Sale", back_populates="product")
 
 class Sale(Base):
     __tablename__ = "sales"
@@ -36,6 +42,9 @@ class Sale(Base):
     # Establishing relationships to Customer and Product
     customer = relationship("Customer", back_populates="sales")
     product = relationship("Product", back_populates="sales")
+
+    # Establish a one-to-many relationship from Sale to Installment
+    installments = relationship("Installment", back_populates="sale")
 
 class Installment(Base):
     __tablename__ = "installments"
