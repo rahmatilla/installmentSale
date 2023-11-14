@@ -43,7 +43,7 @@ async def delete_customer(customer_id: int):
     async with AsyncSessionLocal() as session:
         db_customer = await session.get(models.Customer, customer_id)
         if db_customer:
-            session.delete(db_customer)
+            await session.delete(db_customer)
             await session.commit()
             return db_customer
         else:
