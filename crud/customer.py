@@ -1,4 +1,3 @@
-from sqlalchemy.ext.asyncio import AsyncSession
 from schemas import Customer
 from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
