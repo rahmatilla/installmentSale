@@ -28,6 +28,6 @@ async def get_product_api(product_id: int):
 async def update_product_api(product_id: int, product: Product):
     return await update_product(product_id, product)
 
-@router.delete("/customers/{product_id}", response_model=Product)
+@router.delete("/products/{product_id}", response_model=Product)
 async def delete_product_api(product_id: int):
     return await delete_product(product_id)

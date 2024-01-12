@@ -36,7 +36,7 @@ async def update_product(product_id: int, product: Product):
             await session.refresh(db_product)
             return db_product
         else:
-            raise HTTPException(status_code=404, detail="Customer not found")
+            raise HTTPException(status_code=404, detail="Product not found")
 
 async def delete_product(product_id: int):
     async with AsyncSessionLocal() as session:

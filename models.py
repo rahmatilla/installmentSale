@@ -1,22 +1,33 @@
-from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey, Boolean, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
+import datetime
+
 
 
 Base = declarative_base()
 
 class Customer(Base):
-    __tablename__ = "customers"
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
     first_name = Column(String)
     last_name = Column(String)
-    phone_number = Column(String)
-    email = Column(String)
+    phone_number = Column(String, unique=True, nullable=False)
+    role = Column(String)
+    password = Column(String, nullable=False)
 
-    # Establish a one-to-many relationship from Customer to Sale
-    sales = relationship("Sale", back_populates="customer")
+    # Establish a one-to-many relationship from User to Sale
+    sales = relationship("Sale", back_populates="user")
+
+class TokenTable(Base):
+    __tablename__ = "token"
+    user_id = Column(Integer)
+    access_toke = Column(String(450), primary_key=True)
+    refresh_toke = Column(String(450),nullable=False)
+    status = Column(Boolean)
+    created_date = Column(DateTime, default=datetime.datetime.now)
 
 class Product(Base):
     __tablename__ = "products"
@@ -32,15 +43,15 @@ class Sale(Base):
     __tablename__ = "sales"
 
     id = Column(Integer, primary_key=True, index=True)
-    customer_id = Column(Integer, ForeignKey('customers.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
     product_id = Column(Integer, ForeignKey('products.id'))
     total_amount = Column(Float)
     down_payment = Column(Float)
     remaining_amount = Column(Float)
     sale_date = Column(Date, default=func.now())
 
-    # Establishing relationships to Customer and Product
-    customer = relationship("Customer", back_populates="sales")
+    # Establishing relationships to User and Product
+    user = relationship("User", back_populates="sales")
     product = relationship("Product", back_populates="sales")
 
     # Establish a one-to-many relationship from Sale to Installment

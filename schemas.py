@@ -1,12 +1,34 @@
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import date
+import datetime
 
-class Customer(BaseModel):
+class User(BaseModel):
     first_name: str
     last_name: str
     phone_number: str
-    email: str
+    role: str
+    password: str
+
+class requestdetails(BaseModel):
+    phone_number:str
+    password:str
+        
+class TokenSchema(BaseModel):
+    access_token: str
+    refresh_token: str
+
+class changepassword(BaseModel):
+    phone_number:str
+    old_password:str
+    new_password:str
+
+class TokenCreate(BaseModel):
+    user_id:str
+    access_token:str
+    refresh_token:str
+    status:bool
+    created_date:datetime.datetime
 
 class Product(BaseModel):
     product_name: str
